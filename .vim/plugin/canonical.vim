@@ -6,8 +6,8 @@ def InsertCanonicalClass(name: string)
 				\ "private:\n" ..
 				\ "public:\n" ..
 				\ name .. "(void);\n" ..
-				\ name .. "(const " .. name .. "& src);\n" ..
-				\ name .. "(void);\n\n" ..
+				\ "~" .. name .. "(void);\n" ..
+				\ name .. "(const " .. name .. "& src);\n\n" ..
 				\ name .. "& operator=(const " .. name .. "& src);\n" ..
 				\ "};"	
 	execute "normal! i" .. classText
