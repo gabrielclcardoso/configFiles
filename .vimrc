@@ -1,11 +1,11 @@
 let g:user42 = 'gcorreia'
 let g:mail42 = 'gcorreia@student.42.rio'
-packadd! dracula
-filetype on
-syntax enable
-colorscheme dracula
-filetype plugin on
-filetype indent on
+syntax on
+set t_co=256
+colorscheme monokai 
+hi Normal guibg=NONE ctermbg=NONE
 set number
-set cursorline
-set scrolloff=10
+filetype on
+filetype indent on
+set tabstop=4
+set shiftwidth=4
