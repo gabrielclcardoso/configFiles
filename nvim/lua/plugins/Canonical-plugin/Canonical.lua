@@ -1,4 +1,5 @@
 vim.cmd([[ let extension = expand('%:e') ]])
+vim.cmd([[ let name = expand('%:r') ]])
 
 function	get_extension(var)
 	return vim.api.nvim_get_var(var)
@@ -6,14 +7,55 @@ end
 
 --local ext = get_extension("extension")
 
-function	insertCanonicalClass(opts)
-	local ext = get_extension("extension")
-	print("args = " .. opts.args)
+function	insertCanonicalClass()
+	local	ext = get_extension("extension")
+	local	name = vim.api.nvim_get_var("name")
+	local	lines
+
 	if (ext == "cpp") then
-		print("source file")
+		lines = getSourceText(name)
 	elseif (ext == "hpp") then
-		print("header file")
+		lines = getHeaderText(name)
+	else
+		print("Invalid file type")
+		return
 	end
+
+	local	row = unpack(vim.api.nvim_win_get_cursor(0))
+	vim.api.nvim_buf_set_lines(0, row - 1, row - 1, {}, lines)
 end
 
-vim.api.nvim_create_user_command('Canonical', insertCanonicalClass, { nargs=1 })
+function	getHeaderText(name)
+	local	lines = {
+		"#ifndef " .. string.upper(name) .. "_HPP",
+		"# define " .. string.upper(name) .. "_HPP", "",
+		"class " .. name .. " {", "",
+		"private:", "",
+		"public:",
+		"\t" .. name .. "(void);",
+		"\t" .. "~" .. name .. "(void);",
+		"\t" .. name .. "(const " .. name .. "& src);", "",
+		"\t" .. name .. "&\toperator=(const " .. name .. "& src);",
+		"};", "",
+		"#endif"
+	}
+	return lines
+end
+
+function	getSourceText(name)
+	local	lines = {
+		"#include \"" .. name .. ".hpp\"", "",
+		name .. "::" .. name .. "(void) {}", "",
+		name .. "::" .. name .. "(const" .. name .. "& src) {",
+		"\t*this = src;",
+		"}", "",
+		name .. "::~" .. name .. "(void) {}", "",
+		name .. "&\t" .. name .. "::operator=(const" .. name .. "& src) {",
+		"\treturn (*this);",
+		"}", ""
+	}
+	return lines
+end
+
+vim.api.nvim_create_user_command('Canonical', insertCanonicalClass, {})
+
