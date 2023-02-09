@@ -7,6 +7,8 @@ set	shiftwidth=4
 set t_co=256
 ]])
 
+require("monokai").setup { palette = require("monokai").pro }
+
 --syntax on
 --set t_co=256
 --colorscheme monokai 
