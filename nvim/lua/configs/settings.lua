@@ -5,9 +5,9 @@ set nu rnu
 set	tabstop=4
 set	shiftwidth=4
 set t_co=256
+colorscheme tokyonight-night
 ]])
 
-require("monokai").setup { palette = require("monokai").pro }
 
 --syntax on
 --set t_co=256
