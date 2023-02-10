@@ -6,7 +6,7 @@ end
 
 function	insertCanonicalClass()
 	vim.cmd([[ let extension = expand('%:e') ]])
-	vim.cmd([[ let name = expand('%:r:t') ]])
+	vim.cmd([[ let name = expand('%:t:r') ]])
 	local	ext = get_extension("extension")
 	local	name = vim.api.nvim_get_var("name")
 	local	lines
