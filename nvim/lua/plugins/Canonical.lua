@@ -32,8 +32,8 @@ function	getHeaderText(name)
 		"private:", "",
 		"public:",
 		"\t" .. name .. "(void);",
-		"\t" .. "~" .. name .. "(void);",
-		"\t" .. name .. "(const " .. name .. "& src);", "",
+		"\t" .. name .. "(const " .. name .. "& src);",
+		"\t" .. "virtual\t~" .. name .. "(void);", "",
 		"\t" .. name .. "&\toperator=(const " .. name .. "& src);",
 		"};", "",
 		"#endif"
@@ -45,11 +45,11 @@ function	getSourceText(name)
 	local	lines = {
 		"#include \"" .. name .. ".hpp\"", "",
 		name .. "::" .. name .. "(void) {}", "",
-		name .. "::" .. name .. "(const" .. name .. "& src) {",
+		name .. "::" .. name .. "(const " .. name .. "& src) {",
 		"\t*this = src;",
 		"}", "",
 		name .. "::~" .. name .. "(void) {}", "",
-		name .. "&\t" .. name .. "::operator=(const" .. name .. "& src) {",
+		name .. "&\t" .. name .. "::operator=(const " .. name .. "& src) {",
 		"\treturn (*this);",
 		"}", ""
 	}

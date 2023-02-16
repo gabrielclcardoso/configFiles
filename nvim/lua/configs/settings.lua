@@ -19,12 +19,5 @@ vim.opt.undofile = true
 
 vim.opt.scrolloff = 8
 
---syntax on
---set t_co=256
---colorscheme monokai 
---hi Normal guibg=NONE ctermbg=NONE
---set number
---filetype on
---filetype indent on
---set tabstop=4
---set shiftwidth=4
+vim.opt.hlsearch = false
+vim.opt.incsearch = true
