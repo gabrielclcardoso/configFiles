@@ -18,7 +18,14 @@ return require('packer').startup(function(use)
 
   use 'rstacruz/vim-closer'
 
-  use 'folke/tokyonight.nvim'
+  use({
+      'rose-pine/neovim',
+      as = 'rose-pine',
+      config = function()
+          require("rose-pine").setup()
+          vim.cmd('colorscheme rose-pine')
+      end
+  })
 
   use {
 	  'nvim-treesitter/nvim-treesitter',

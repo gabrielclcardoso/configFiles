@@ -2,8 +2,6 @@ function	get_extension(var)
 	return vim.api.nvim_get_var(var)
 end
 
---local ext = get_extension("extension")
-
 function	insertCanonicalClass()
 	vim.cmd([[ let extension = expand('%:e') ]])
 	vim.cmd([[ let name = expand('%:t:r') ]])
@@ -25,9 +23,13 @@ function	insertCanonicalClass()
 end
 
 function	getHeaderText(name)
+	local	headerGuard = string.upper(string.gsub(name, "%u", "_%1"))
+	if (string.sub(headerGuard, 1, 1) == "_") then
+		headerGuard = string.sub(headerGuard, 2)
+	end
 	local	lines = {
-		"#ifndef " .. string.upper(name) .. "_HPP",
-		"# define " .. string.upper(name) .. "_HPP", "",
+		"#ifndef " .. headerGuard .. "_HPP",
+		"# define " .. headerGuard .. "_HPP", "",
 		"class " .. name .. " {", "",
 		"private:", "",
 		"public:",
