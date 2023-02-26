@@ -47,9 +47,7 @@ function	getSourceText(name)
 	local	lines = {
 		"#include \"" .. name .. ".hpp\"", "",
 		name .. "::" .. name .. "(void) {", "}",  "",
-		name .. "::" .. name .. "(const " .. name .. "& src) {",
-		"\t*this = src;",
-		"}", "",
+		name .. "::" .. name .. "(const " .. name .. "& src) { *this = src; }", "",
 		name .. "::~" .. name .. "(void) {", "}", "",
 		name .. "&\t" .. name .. "::operator=(const " .. name .. "& src) {",
 		"\tif (this != &src) {", "\t}",

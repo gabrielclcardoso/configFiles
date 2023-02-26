@@ -11,6 +11,7 @@ lsp.setup_nvim_cmp({
   mapping = lsp.defaults.cmp_mappings({
     ['<Tab>'] = vim.NIL,
     ['<S-Tab>'] = vim.NIL,
+    ['<CR>'] = vim.NIL,
   })
 })
 
