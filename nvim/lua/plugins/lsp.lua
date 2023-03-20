@@ -7,6 +7,7 @@ lsp.preset({
   suggest_lsp_servers = false,
 })
 
+-- List lsp servers --
 lsp.ensure_installed({
 	'clangd'
 })

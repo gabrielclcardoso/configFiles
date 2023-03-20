@@ -60,7 +60,12 @@ return require('packer').startup(function(use)
   	}
   }
 
-  use 'ThePrimeagen/vim-be-good'
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional
+    },
+  }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
