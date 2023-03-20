@@ -29,10 +29,18 @@ HISTCONTROL=ignoredups
 
 ################################### PROMPT #####################################
 
+function git_ahead() {
+    if [ -d .git ] || [ -f .git ]
+	then
+		 [[ $(git status 2> /dev/null | grep "Your branch is ahead") ]] && \
+			printf " >>"
+	fi
+}
+
 function git_untracked() {
     if [ -d .git ] || [ -f .git ]
 	then
-		 [[ $(git status 2> /dev/null | grep "Untracked files:") ]] && \
+		 [[ $(git status 2> /dev/null | grep '"git add"') ]] && \
 			printf " X"
 	fi
 }
@@ -63,7 +71,7 @@ function git_branch() {
 
 #PS1=${cyn}'(\A) '${grn}'$(git_clean)'${ylw}'$(git_staged)'${red}'$(git_untracked)'${pur}'$(git_branch)'${blu}' \W'${grn}' \$ '${clr}
 PS1=${cyn}'(\A)'${grn}\
-'$(git_clean)'${ylw}'$(git_staged)'${red}'$(git_untracked)'\
+'$(git_clean)'${ylw}'$(git_staged)'${red}'$(git_untracked)'${wht}'$(git_ahead)'\
 ${pur}'$(git_branch)'${blu}' \W'${wht}' \$ '${clr}
 
 
