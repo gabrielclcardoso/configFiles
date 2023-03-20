@@ -19,7 +19,7 @@ function	insertCanonicalClass()
 	end
 
 	local	row = unpack(vim.api.nvim_win_get_cursor(0))
-	vim.api.nvim_buf_set_lines(0, row - 1, row - 1, {}, lines)
+	vim.api.nvim_buf_set_lines(0, -2, -1, {}, lines)
 end
 
 function	getHeaderText(name)
