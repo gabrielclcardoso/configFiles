@@ -30,21 +30,32 @@ HISTCONTROL="ignoredups:ignorespace"
 ################################### PROMPT #####################################
 
 ## Git info ##
+
+function in_git() {
+	git status 2> /dev/null > /dev/null
+    [ $? -eq 0 ] && printf " $(tput bold setaf 208)\ue702["
+}
+
+function end_git() {
+	git status 2> /dev/null > /dev/null
+    [ $? -eq 0 ] && printf "$(tput bold setaf 208)]"
+}
+
 function git_ahead() {
 	git=$(git status 2> /dev/null | grep "Your branch is ahead")
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf " >>"
+		 [[ -n "$git" ]] && printf "$(tput bold setaf 33)\uf403 "
 	fi
 }
 
-function git_untracked() {
+function git_mod() {
 	git=$(git status 2> /dev/null | grep "git add")
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf " X"
+		 [[ -n "$git" ]] && printf "$(tput bold setaf 196)\ueabd "
 	fi
 }
 
@@ -53,7 +64,7 @@ function git_staged() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf " -"
+		 [[ -n "$git" ]] && printf "$(tput bold setaf 190)\ueabc "
 	fi
 }
 
@@ -62,7 +73,7 @@ function git_clean() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf " O"
+		 [[ -n "$git" ]] && printf "$(tput bold setaf 76)\ueab2 "
 	fi
 }
 
@@ -72,15 +83,31 @@ function git_branch() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ] && [ "$dir" != "$branch" ]
 	then
-		printf " ($branch)" ;
+		printf "$(tput bold setaf 165)($branch)" ;
     fi
+}
+
+function put_git() {
+	in_git
+	git_clean
+	git_staged
+	git_mod
+	git_ahead
+	git_branch
+	end_git
+}
+
+## Environment info ##
+
+function put_arrow() {
+	printf "$(tput bold setaf 40)\uf178 "
 }
 
 # Set the prompt.
 
-PS1=${cyn}'(\A)'${grn}\
-'$(git_clean)'${ylw}'$(git_staged)'${red}'$(git_untracked)'${wht}'$(git_ahead)'\
-${pur}'$(git_branch)'${blu}' \W'${wht}' \$ '${clr}
-
+PS1='$(tput bold setaf 152)(\A)'\
+'$(put_git)'\
+' $(tput bold setaf 51)\W '\
+'$(put_arrow)'${clr}
 
 ################################################################################
