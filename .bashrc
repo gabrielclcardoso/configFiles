@@ -22,54 +22,62 @@ alias vim="nvim"
 
 ################################### HISTORY ####################################
 
-HISTCONTROL=ignoredups
+HISTCONTROL="ignoredups:ignorespace"
 
 ################################################################################
 
 
 ################################### PROMPT #####################################
 
+## Git info ##
 function git_ahead() {
-    if [ -d .git ] || [ -f .git ]
+	git=$(git status 2> /dev/null | grep "Your branch is ahead")
+	git status 2> /dev/null > /dev/null
+    if [ $? -eq 0 ]
 	then
-		 [[ $(git status 2> /dev/null | grep "Your branch is ahead") ]] && \
-			printf " >>"
+		 [[ -n "$git" ]] && printf " >>"
 	fi
 }
 
 function git_untracked() {
-    if [ -d .git ] || [ -f .git ]
+	git=$(git status 2> /dev/null | grep "git add")
+	git status 2> /dev/null > /dev/null
+    if [ $? -eq 0 ]
 	then
-		 [[ $(git status 2> /dev/null | grep '"git add"') ]] && \
-			printf " X"
+		 [[ -n "$git" ]] && printf " X"
 	fi
 }
 
 function git_staged() {
-    if [ -d .git ] || [ -f .git ]
+	git=$(git status 2> /dev/null | grep "Changes to be committed:")
+	git status 2> /dev/null > /dev/null
+    if [ $? -eq 0 ]
 	then
-		 [[ $(git status 2> /dev/null | grep "Changes to be committed:") ]] && \
-			printf " -"
+		 [[ -n "$git" ]] && printf " -"
 	fi
 }
 
 function git_clean() {
-    if [ -d .git ] || [ -f .git ]
+	git=$(git status 2> /dev/null | grep "nothing to commit")
+	git status 2> /dev/null > /dev/null
+    if [ $? -eq 0 ]
 	then
-		 [[ $(git status 2> /dev/null | grep "nothing to commit") ]] && \
-			printf " O"
+		 [[ -n "$git" ]] && printf " O"
 	fi
 }
 
 function git_branch() {
-    if [ -d .git ] ; then
-        printf "%s" "($(git branch 2> /dev/null | awk '/\*/{print $2}'))";
+	branch=$(git branch 2> /dev/null | awk '/\*/{print $2}')
+	dir=$(basename "$PWD")
+	git status 2> /dev/null > /dev/null
+    if [ $? -eq 0 ] && [ "$dir" != "$branch" ]
+	then
+		printf " ($branch)" ;
     fi
 }
 
 # Set the prompt.
 
-#PS1=${cyn}'(\A) '${grn}'$(git_clean)'${ylw}'$(git_staged)'${red}'$(git_untracked)'${pur}'$(git_branch)'${blu}' \W'${grn}' \$ '${clr}
 PS1=${cyn}'(\A)'${grn}\
 '$(git_clean)'${ylw}'$(git_staged)'${red}'$(git_untracked)'${wht}'$(git_ahead)'\
 ${pur}'$(git_branch)'${blu}' \W'${wht}' \$ '${clr}
