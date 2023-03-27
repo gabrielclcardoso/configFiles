@@ -34,12 +34,12 @@ HISTCONTROL="ignoredups:ignorespace"
 
 function in_git() {
 	git status 2> /dev/null > /dev/null
-    [ $? -eq 0 ] && printf " $(tput bold setaf 208)\ue702["
+    [ $? -eq 0 ] && printf " \ue702["
 }
 
 function end_git() {
 	git status 2> /dev/null > /dev/null
-    [ $? -eq 0 ] && printf "$(tput bold setaf 208)]"
+    [ $? -eq 0 ] && printf "]"
 }
 
 function git_ahead() {
@@ -47,7 +47,7 @@ function git_ahead() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf "$(tput bold setaf 33)\uf403 "
+		 [[ -n "$git" ]] && printf "\uf403 "
 	fi
 }
 
@@ -56,7 +56,7 @@ function git_mod() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf "$(tput bold setaf 196)\ueabd "
+		 [[ -n "$git" ]] && printf "\ueabd "
 	fi
 }
 
@@ -65,7 +65,7 @@ function git_staged() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf "$(tput bold setaf 190)\ueabc "
+		 [[ -n "$git" ]] && printf "\ueabc "
 	fi
 }
 
@@ -74,7 +74,7 @@ function git_clean() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf "$(tput bold setaf 76)\ueab2 "
+		 [[ -n "$git" ]] && printf "\ueab2 "
 	fi
 }
 
@@ -84,31 +84,27 @@ function git_branch() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ] && [ "$dir" != "$branch" ]
 	then
-		printf "$(tput bold setaf 165)($branch)" ;
+		printf "($branch)" ;
     fi
-}
-
-function put_git() {
-	in_git
-	git_clean
-	git_staged
-	git_mod
-	git_ahead
-	git_branch
-	end_git
 }
 
 ## Environment info ##
 
 function put_arrow() {
-	printf "$(tput bold setaf 40)\uf178 "
+	printf "\uf178 "
 }
 
 # Set the prompt.
 
-PS1='$(tput bold setaf 152)(\A)'\
-'$(put_git)'\
-' $(tput bold setaf 51)\W '\
-'$(put_arrow)'${clr}
+PS1='\[$(tput bold setaf 152)\](\A)'\
+'\[$(tput bold setaf 208)\]$(in_git)'\
+'\[$(tput bold setaf 76)\]$(git_clean)'\
+'\[$(tput bold setaf 190)\]$(git_staged)'\
+'\[$(tput bold setaf 196)\]$(git_mod)'\
+'\[$(tput bold setaf 33)\]$(git_ahead)'\
+'\[$(tput bold setaf 165)\]$(git_branch)'\
+'\[$(tput bold setaf 208)\]$(end_git)'\
+' \[$(tput bold setaf 51)\]\W '\
+'\[$(tput bold setaf 40)\]$(put_arrow)'${clr}
 
 ################################################################################
