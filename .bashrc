@@ -106,15 +106,15 @@ function put_arrow() {
 
 # Set the prompt.
 
-PS1='\[$(tput bold setaf 152)\](\A)'\
-'\[$(tput bold setaf 208)\]$(in_git)'\
-'\[$(tput bold setaf 76)\]$(git_clean)'\
-'\[$(tput bold setaf 190)\]$(git_staged)'\
-'\[$(tput bold setaf 196)\]$(git_mod)'\
-'\[$(tput bold setaf 33)\]$(git_ahead)'\
-'\[$(tput bold setaf 165)\]$(git_branch)'\
-'\[$(tput bold setaf 208)\]$(end_git)'\
-' \[$(tput bold setaf 51)\]\W '\
-'\[$(tput bold setaf 40)\]$(put_arrow)'${clr}
+PS1='\[$(tput bold)\]\[$(tput setaf 152)\](\A)'\
+'\[$(tput setaf 208)\]$(in_git)'\
+'\[$(tput setaf 76)\]$(git_clean)'\
+'\[$(tput setaf 190)\]$(git_staged)'\
+'\[$(tput setaf 196)\]$(git_mod)'\
+'\[$(tput setaf 33)\]$(git_ahead)'\
+'\[$(tput setaf 165)\]$(git_branch)'\
+'\[$(tput setaf 208)\]$(end_git)'\
+' \[$(tput setaf 51)\]\W '\
+'\[$(tput setaf 40)\]$(put_arrow)'${clr}
 
 ################################################################################
