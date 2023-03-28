@@ -51,32 +51,24 @@ function in_git() {
 	return 1
 }
 
-function begin_git() {
-    printf "["
-}
-
-function end_git() {
-    printf "]"
-}
-
 function git_ahead() {
 	git=$(git status 2> /dev/null | grep "Your branch is ahead")
-	[[ -n "$git" ]] && printf "󱧳 "
+	[[ -n "$git" ]] && printf "󱧳"
 }
 
 function git_mod() {
 	git=$(git status 2> /dev/null | grep "git add")
-	[[ -n "$git" ]] && printf "⨯ "
+	[[ -n "$git" ]] && printf "⨯"
 }
 
 function git_staged() {
 	git=$(git status 2> /dev/null | grep "Changes to be committed:")
-	[[ -n "$git" ]] && printf " "
+	[[ -n "$git" ]] && printf ""
 }
 
 function git_clean() {
 	git=$(git status 2> /dev/null | grep "nothing to commit")
-	[[ -n "$git" ]] && printf "󰡕 "
+	[[ -n "$git" ]] && printf "󰡕"
 }
 
 function git_branch() {
@@ -100,13 +92,13 @@ function set_prompt() {
 if $(in_git)
 then
 PS1='\[$(tput bold)\]\[$(tput setab 234)\]\[$(tput setaf 152)\](\A) \
-\[$(tput setaf 172)\]$(begin_git)\
+\[$(tput setaf 172)\]{\
 \[$(tput setaf 76)\]$(git_clean)\
 \[$(tput setaf 190)\]$(git_staged)\
 \[$(tput setaf 196)\]$(git_mod)\
 \[$(tput setaf 33)\]$(git_ahead)\
 \[$(tput setaf 201)\]$(git_branch)\
-\[$(tput setaf 172)\]$(end_git)\
+\[$(tput setaf 172)\]}\
  \[$(tput setaf 51)\]\W\
 \[$(tput sgr0)\]\[$(tput setaf 40)\]  '${clr}
 else
