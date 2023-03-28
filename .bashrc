@@ -52,7 +52,7 @@ function in_git() {
 }
 
 function begin_git() {
-    printf " ["
+    printf "["
 }
 
 function end_git() {
@@ -91,7 +91,7 @@ function git_branch() {
 ## Environment info ##
 
 function put_arrow() {
-	printf " "
+	printf ""
 }
 
 # Set the prompt.
@@ -99,20 +99,20 @@ function put_arrow() {
 function set_prompt() {
 if $(in_git)
 then
-PS1='\[$(tput bold)\]\[$(tput setaf 152)\](\A)\
-\[$(tput setaf 208)\]$(begin_git)\
+PS1='\[$(tput bold)\]\[$(tput setab 234)\]\[$(tput setaf 152)\](\A) \
+\[$(tput setaf 172)\]$(begin_git)\
 \[$(tput setaf 76)\]$(git_clean)\
 \[$(tput setaf 190)\]$(git_staged)\
 \[$(tput setaf 196)\]$(git_mod)\
 \[$(tput setaf 33)\]$(git_ahead)\
-\[$(tput setaf 165)\]$(git_branch)\
-\[$(tput setaf 208)\]$(end_git)\
- \[$(tput setaf 51)\]\W \
-\[$(tput setaf 40)\]$(put_arrow)'${clr}
+\[$(tput setaf 201)\]$(git_branch)\
+\[$(tput setaf 172)\]$(end_git)\
+ \[$(tput setaf 51)\]\W\
+\[$(tput sgr0)\]\[$(tput setaf 40)\]  '${clr}
 else
-PS1='\[$(tput bold)\]\[$(tput setaf 152)\](\A)\
- \[$(tput setaf 51)\]\W \
-\[$(tput setaf 40)\]$(put_arrow)'${clr}
+PS1='\[$(tput bold)\]\[$(tput setab 234)\]\[$(tput setaf 152)\](\A) \
+ \[$(tput setaf 51)\]\W\
+\[$(tput sgr0)\]\[$(tput setaf 40)\]  '${clr}
 fi
 }
 
