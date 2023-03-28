@@ -44,55 +44,45 @@ HISTCONTROL="ignoredups:ignorespace"
 
 function in_git() {
 	git status 2> /dev/null > /dev/null
-    [ $? -eq 0 ] && printf " ["
+	if [ $? -eq 0 ]
+	then
+		return 0
+	fi
+	return 1
+}
+
+function begin_git() {
+    printf " ["
 }
 
 function end_git() {
-	git status 2> /dev/null > /dev/null
-    [ $? -eq 0 ] && printf "]"
+    printf "]"
 }
 
 function git_ahead() {
 	git=$(git status 2> /dev/null | grep "Your branch is ahead")
-	git status 2> /dev/null > /dev/null
-    if [ $? -eq 0 ]
-	then
-		 [[ -n "$git" ]] && printf "󱧳 "
-	fi
+	[[ -n "$git" ]] && printf "󱧳 "
 }
 
 function git_mod() {
 	git=$(git status 2> /dev/null | grep "git add")
-	git status 2> /dev/null > /dev/null
-    if [ $? -eq 0 ]
-	then
-		 [[ -n "$git" ]] && printf "⨯ "
-	fi
+	[[ -n "$git" ]] && printf "⨯ "
 }
 
 function git_staged() {
 	git=$(git status 2> /dev/null | grep "Changes to be committed:")
-	git status 2> /dev/null > /dev/null
-    if [ $? -eq 0 ]
-	then
-		 [[ -n "$git" ]] && printf " "
-	fi
+	[[ -n "$git" ]] && printf " "
 }
 
 function git_clean() {
 	git=$(git status 2> /dev/null | grep "nothing to commit")
-	git status 2> /dev/null > /dev/null
-    if [ $? -eq 0 ]
-	then
-		 [[ -n "$git" ]] && printf "󰡕 "
-	fi
+	[[ -n "$git" ]] && printf "󰡕 "
 }
 
 function git_branch() {
 	branch=$(git branch 2> /dev/null | awk '/\*/{print $2}')
 	dir=$(basename "$PWD")
-	git status 2> /dev/null > /dev/null
-    if [ $? -eq 0 ] && [ "$dir" != "$branch" ]
+    if [ "$dir" != "$branch" ]
 	then
 		printf "($branch)" ;
     fi
@@ -106,15 +96,26 @@ function put_arrow() {
 
 # Set the prompt.
 
-PS1='\[$(tput bold)\]\[$(tput setaf 152)\](\A)'\
-'\[$(tput setaf 208)\]$(in_git)'\
-'\[$(tput setaf 76)\]$(git_clean)'\
-'\[$(tput setaf 190)\]$(git_staged)'\
-'\[$(tput setaf 196)\]$(git_mod)'\
-'\[$(tput setaf 33)\]$(git_ahead)'\
-'\[$(tput setaf 165)\]$(git_branch)'\
-'\[$(tput setaf 208)\]$(end_git)'\
-' \[$(tput setaf 51)\]\W '\
-'\[$(tput setaf 40)\]$(put_arrow)'${clr}
+function set_prompt() {
+if $(in_git)
+then
+PS1='\[$(tput bold)\]\[$(tput setaf 152)\](\A)\
+\[$(tput setaf 208)\]$(begin_git)\
+\[$(tput setaf 76)\]$(git_clean)\
+\[$(tput setaf 190)\]$(git_staged)\
+\[$(tput setaf 196)\]$(git_mod)\
+\[$(tput setaf 33)\]$(git_ahead)\
+\[$(tput setaf 165)\]$(git_branch)\
+\[$(tput setaf 208)\]$(end_git)\
+ \[$(tput setaf 51)\]\W \
+\[$(tput setaf 40)\]$(put_arrow)'${clr}
+else
+PS1='\[$(tput bold)\]\[$(tput setaf 152)\](\A)\
+ \[$(tput setaf 51)\]\W \
+\[$(tput setaf 40)\]$(put_arrow)'${clr}
+fi
+}
+
+PROMPT_COMMAND='set_prompt'
 
 ################################################################################
