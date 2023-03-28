@@ -1,5 +1,7 @@
 #!/bin/bash
 
+OS=$(uname)
+
 alacritty --version &> /dev/null
 [[ $? -ne 0 ]] && echo "Alacritty not installed"
 nvim --version &> /dev/null
@@ -9,6 +11,12 @@ tmux -V &> /dev/null
 
 cp -r alacritty $HOME/.config
 cp -r nvim $HOME/.config
-cp font/* $HOME/.local/share/fonts
+if [[ "$OS" == "Linux"	]]
+then
+	cp font/* $HOME/.local/share/fonts/
+else
+	echo "there"
+	cp font/* $HOME/Library/Fonts/
+fi
 cp .bashrc $HOME
 cp .tmux.conf $HOME
