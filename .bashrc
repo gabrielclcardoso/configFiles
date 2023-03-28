@@ -44,7 +44,7 @@ HISTCONTROL="ignoredups:ignorespace"
 
 function in_git() {
 	git status 2> /dev/null > /dev/null
-    [ $? -eq 0 ] && printf " \ue702["
+    [ $? -eq 0 ] && printf " ["
 }
 
 function end_git() {
@@ -57,7 +57,7 @@ function git_ahead() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf "\uf403 "
+		 [[ -n "$git" ]] && printf "󱧳 "
 	fi
 }
 
@@ -66,7 +66,7 @@ function git_mod() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf "\ueabd "
+		 [[ -n "$git" ]] && printf "⨯ "
 	fi
 }
 
@@ -75,7 +75,7 @@ function git_staged() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf "\ueabc "
+		 [[ -n "$git" ]] && printf " "
 	fi
 }
 
@@ -84,7 +84,7 @@ function git_clean() {
 	git status 2> /dev/null > /dev/null
     if [ $? -eq 0 ]
 	then
-		 [[ -n "$git" ]] && printf "\ueab2 "
+		 [[ -n "$git" ]] && printf "󰡕 "
 	fi
 }
 
@@ -101,7 +101,7 @@ function git_branch() {
 ## Environment info ##
 
 function put_arrow() {
-	printf "\uf178 "
+	printf " "
 }
 
 # Set the prompt.
