@@ -21,11 +21,11 @@ alias vim="nvim"
 
 
 ## Colorfull ls ##
-if [[ "$OS" -eq "Linux" ]]
+if [[ "$OS" == "Linux" ]]
 then
-	alias ls="ls -G"
-else
 	alias ls="ls --color"
+else
+	alias ls="ls -G"
 fi
 
 ################################################################################
@@ -98,12 +98,12 @@ PS1='\[$(tput bold)\]\[$(tput setab 234)\]\[$(tput setaf 152)\](\A) \
 \[$(tput setaf 196)\]$(git_mod)\
 \[$(tput setaf 33)\]$(git_ahead)\
 \[$(tput setaf 201)\]$(git_branch)\
-\[$(tput setaf 172)\]}\
- \[$(tput setaf 51)\]\W\
+\[$(tput setaf 172)\]} \
+\[$(tput setaf 51)\]\W\
 \[$(tput sgr0)\]\[$(tput setaf 40)\]  '${clr}
 else
 PS1='\[$(tput bold)\]\[$(tput setab 234)\]\[$(tput setaf 152)\](\A) \
- \[$(tput setaf 51)\]\W\
+\[$(tput setaf 51)\]\W\
 \[$(tput sgr0)\]\[$(tput setaf 40)\]  '${clr}
 fi
 }
