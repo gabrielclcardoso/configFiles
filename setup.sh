@@ -15,7 +15,6 @@ if [[ "$OS" == "Linux"	]]
 then
 	cp font/* $HOME/.local/share/fonts/
 else
-	echo "there"
 	cp font/* $HOME/Library/Fonts/
 fi
 cp .bashrc $HOME
