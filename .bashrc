@@ -91,7 +91,7 @@ function put_arrow() {
 function set_prompt() {
 if $(in_git)
 then
-PS1='\[$(tput bold)\]\[$(tput setab 234)\]\[$(tput setaf 152)\](\A) \
+PS1='\
 \[$(tput setaf 172)\]{\
 \[$(tput setaf 76)\]$(git_clean)\
 \[$(tput setaf 190)\]$(git_staged)\
@@ -102,7 +102,7 @@ PS1='\[$(tput bold)\]\[$(tput setab 234)\]\[$(tput setaf 152)\](\A) \
 \[$(tput setaf 51)\]\W\
 \[$(tput sgr0)\]\[$(tput setaf 40)\]  '${clr}
 else
-PS1='\[$(tput bold)\]\[$(tput setab 234)\]\[$(tput setaf 152)\](\A) \
+PS1='\
 \[$(tput setaf 51)\]\W\
 \[$(tput sgr0)\]\[$(tput setaf 40)\]  '${clr}
 fi
