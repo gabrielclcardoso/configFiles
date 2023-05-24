@@ -19,3 +19,4 @@ else
 fi
 cp .bashrc $HOME
 cp .tmux.conf $HOME
+cp -r .tmux $HOME
