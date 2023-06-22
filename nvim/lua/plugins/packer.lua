@@ -31,6 +31,22 @@ return require('packer').startup(function(use)
   }
 
   use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional
+    },
+  }
+
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  }
+
+  use('neovim/nvim-lspconfig')
+  use('jose-elias-alvarez/null-ls.nvim')
+  use('MunifTanjim/prettier.nvim')
+
+  use {
 	'VonHeikemen/lsp-zero.nvim',
   	branch = 'v1.x',
   	requires = {
@@ -51,18 +67,6 @@ return require('packer').startup(function(use)
   	  {'L3MON4D3/LuaSnip'},             -- Required
   	  {'rafamadriz/friendly-snippets'}, -- Optional
   	}
-  }
-
-  use {
-    'nvim-tree/nvim-tree.lua',
-    requires = {
-      'nvim-tree/nvim-web-devicons', -- optional
-    },
-  }
-
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
 
   -- Automatically set up your configuration after cloning packer.nvim

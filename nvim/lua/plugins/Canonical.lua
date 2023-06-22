@@ -30,13 +30,13 @@ function	getHeaderText(name)
 	local	lines = {
 		"#ifndef " .. headerGuard .. "_HPP",
 		"# define " .. headerGuard .. "_HPP", "",
-		"class " .. name .. " {", "",
-		"private:", "",
+		"class " .. name .. " {",
 		"public:",
 		"\t" .. name .. "(void);",
 		"\t" .. name .. "(const " .. name .. "& src);",
 		"\t" .. "virtual\t~" .. name .. "(void);", "",
 		"\t" .. name .. "&\toperator=(const " .. name .. "& src);",
+		"private:",
 		"};", "",
 		"#endif"
 	}
