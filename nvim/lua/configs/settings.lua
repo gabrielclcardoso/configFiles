@@ -36,3 +36,7 @@ vim.o.scrolloff = 8
 
 vim.o.hlsearch = false
 vim.o.incsearch = true
+
+vim.cmd([[
+  autocmd FileType json setlocal tabstop=2
+]])
