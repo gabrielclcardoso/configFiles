@@ -13,6 +13,9 @@ if vim.fn.has('gui_running') == 0 and vim.o.term:find('^%(screen%|tmux%)') then
   vim.o.t_8b = '\27[48;2;%lu;%lu;%lum'
 end
 
+vim.o.list = true
+vim.o.listchars = "tab:>-"
+
 vim.o.syntax = "on"
 vim.o.termguicolors = true
 
