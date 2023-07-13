@@ -42,4 +42,5 @@ vim.o.incsearch = true
 
 vim.cmd([[
   autocmd FileType json setlocal tabstop=2
+  autocmd FileType json setlocal shiftwidth=2
 ]])
