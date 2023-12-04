@@ -1,6 +1,6 @@
 import subprocess
-#from libqtile.widget.base import InLoopPollText
-from libqtile.widget import base 
+from libqtile.widget import base
+
 
 class MicrophoneStatus(base.InLoopPollText):
     orientations = base.ORIENTATION_HORIZONTAL
@@ -11,7 +11,8 @@ class MicrophoneStatus(base.InLoopPollText):
 
     def get_microphone_status(self):
         try:
-            output = subprocess.check_output(["pactl", "list", "sources"]).decode("utf-8")
+            output = subprocess.check_output(
+                ["pactl", "list", "sources"]).decode("utf-8")
             if "Mute: yes" in output:
                 return ""
             elif "Mute: no" in output:
@@ -20,5 +21,6 @@ class MicrophoneStatus(base.InLoopPollText):
                 return "MIC: Unknown"
         except subprocess.CalledProcessError:
             return "MIC: N/A"
+
     def poll(self):
         return self.get_microphone_status()

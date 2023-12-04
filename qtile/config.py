@@ -17,14 +17,18 @@ keys = [
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
+    Key([mod, "shift"], "h", lazy.layout.shuffle_left(),
+        desc="Move window to the left"),
+    Key([mod, "shift"], "l", lazy.layout.shuffle_right(),
+        desc="Move window to the right"),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
-    Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
+    Key([mod, "control"], "h", lazy.layout.grow_left(),
+        desc="Grow window to the left"),
+    Key([mod, "control"], "l", lazy.layout.grow_right(),
+        desc="Grow window to the right"),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
@@ -48,25 +52,31 @@ keys = [
         lazy.window.toggle_fullscreen(),
         desc="Toggle fullscreen on the focused window",
     ),
-    Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
+    Key([mod], "t", lazy.window.toggle_floating(),
+        desc="Toggle floating on the focused window"),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
 
     # Volume Bindings
-    Key([], "XF86AudioRaiseVolume", lazy.spawn("/home/gcorreia/.config/qtile/volume_scripts/volup.sh")),
-    Key([], "XF86AudioLowerVolume", lazy.spawn("/home/gcorreia/.config/qtile/volume_scripts/voldown.sh")),
-    Key([], "XF86Audiomute", lazy.spawn("/home/gcorreia/.config/qtile/volume_scripts/mute.sh")),
+    Key([], "XF86AudioRaiseVolume", lazy.spawn(
+        "/home/gcorreia/.config/qtile/volume_scripts/volup.sh")),
+    Key([], "XF86AudioLowerVolume", lazy.spawn(
+        "/home/gcorreia/.config/qtile/volume_scripts/voldown.sh")),
+    Key([], "XF86Audiomute", lazy.spawn(
+        "/home/gcorreia/.config/qtile/volume_scripts/mute.sh")),
 
     # Brightness Bindings
     Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set 5%-")),
     Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 5%+")),
 
     # sys bindings
-    Key([mod], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Next keyboard layout."),
+    Key([mod], "space", lazy.widget["keyboardlayout"].next_keyboard(),
+        desc="Next keyboard layout."),
     Key([mod], "q", lazy.spawn("dm-tool lock"), desc="Locks the screen"),
     Key([], "Print", lazy.spawn("coreshot"), desc="Takes Screenshot"),
-    Key([], "XF86AudioMicMute", lazy.spawn("/home/gcorreia/.config/qtile/volume_scripts/mute_mic.sh"), desc="mutes mic"),
+    Key([], "XF86AudioMicMute", lazy.spawn(
+        "/home/gcorreia/.config/qtile/volume_scripts/mute_mic.sh"), desc="mutes mic"),
 ]
 
 groups = [Group(i) for i in ["dev", "browse", "msg", "misc", "bg"]]
@@ -86,7 +96,8 @@ for index, i in enumerate(groups):
                 [mod, "shift"],
                 str(index + 1),
                 lazy.window.togroup(i.name, switch_group=True),
-                desc="Switch to & move focused window to group {}".format(i.name),
+                desc="Switch to & move focused window to group {}".format(
+                    i.name),
             ),
             # Or, use below if you prefer not to switch to that group.
             # # mod1 + shift + letter of group = move focused window to group
@@ -140,7 +151,7 @@ screens = [
                 widget.Spacer(bar.STRETCH),
 
                 widget.Clock(format="%d/%m %H:%M",
-                              mouse_callbacks={'Button1': lazy.spawn("coretime")}),
+                             mouse_callbacks={'Button1': lazy.spawn("coretime")}),
                 widget.KeyboardLayout(configured_keyboards=['us', 'br']),
                 widget.TextBox(fmt='',
                                fontsize=16,
@@ -159,7 +170,7 @@ screens = [
                               padding=1.5,
                               mouse_callbacks={'Button1': lazy.spawn("pavucontrol")}),
                 MicrophoneStatus(update_interval=0.5,
-                              mouse_callbacks={'Button1': lazy.spawn("pavucontrol")}),
+                                 mouse_callbacks={'Button1': lazy.spawn("pavucontrol")}),
                 widget.TextBox(fmt='󰍺',
                                fontsize=16,
                                padding=1.5,
@@ -183,8 +194,10 @@ screens = [
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Drag([mod], "Button1", lazy.window.set_position_floating(),
+         start=lazy.window.get_position()),
+    Drag([mod], "Button3", lazy.window.set_size_floating(),
+         start=lazy.window.get_size()),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
