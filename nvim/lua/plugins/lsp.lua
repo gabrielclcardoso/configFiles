@@ -13,6 +13,7 @@ lsp.ensure_installed({
 	'pylsp',
 	'tsserver',
 	'lua_ls',
+	'rust_analyzer',
 })
 
 local cmp = require('cmp')
