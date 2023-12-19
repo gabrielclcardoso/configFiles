@@ -116,5 +116,11 @@ return {
 			on_attach = on_attach,
 			cmd = { "rust-analyzer" }
 		})
+
+		-- Markdwon LSP setup
+		lspconfig["remark_ls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 	end
 }
