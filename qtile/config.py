@@ -79,7 +79,7 @@ keys = [
         "/home/gcorreia/.config/qtile/volume_scripts/mute_mic.sh"), desc="mutes mic"),
 ]
 
-groups = [Group(i) for i in ["dev", "browse", "msg", "misc", "bg"]]
+groups = [Group(i) for i in ["dev", "browse", "msg", "personal", "misc", "bg"]]
 
 for index, i in enumerate(groups):
     keys.extend(
