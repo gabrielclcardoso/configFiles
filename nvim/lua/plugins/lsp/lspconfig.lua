@@ -3,6 +3,7 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
+		"simrat39/rust-tools.nvim",
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
@@ -111,16 +112,11 @@ return {
 		})
 
 		-- Rust LSP setup
-		lspconfig["rust_analyzer"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			cmd = { "rust-analyzer" }
-		})
-
-		-- Markdwon LSP setup
-		lspconfig["remark_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		local rt = require("rust-tools")
+		rt.setup({
+			server = {
+				on_attach = on_attach,
+			},
 		})
 	end
 }
