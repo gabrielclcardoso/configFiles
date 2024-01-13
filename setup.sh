@@ -11,6 +11,7 @@ tmux -V &> /dev/null
 
 cp -r alacritty $HOME/.config
 cp -r nvim $HOME/.config
+cp -r qtile $HOME/.config
 if [[ "$OS" == "Linux"	]]
 then
 	cp font/* $HOME/.local/share/fonts/
