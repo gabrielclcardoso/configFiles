@@ -19,6 +19,7 @@ else
 	cp font/* $HOME/Library/Fonts/
 fi
 cp .bashrc $HOME
+cp picom.conf $HOME/.config
 cp .bash_profile $HOME
 cp .tmux.conf $HOME
 cp -r .tmux $HOME
