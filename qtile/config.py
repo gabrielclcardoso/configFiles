@@ -38,6 +38,7 @@ pc_widgets = [
                      mouse_callbacks={'Button1': lazy.spawn("/home/gcorreia/.config/qtile/volume_scripts/mute_mic.sh")}),
     widget.TextBox(fmt='󰍺',
                    mouse_callbacks={'Button1': lazy.spawn("arandr")}),
+    widget.TextBox(fmt=''),
 ]
 
 keys = [
@@ -125,11 +126,16 @@ for index, i in enumerate(groups):
         ]
     )
 
+layout_theme = {
+    "border_width": 3,
+    "margin": 5,
+    "border_focus": "5BB1CD",
+    "border_normal": "555555"
+}
+
 layouts = [
-    layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"],
-                   border_width=2,
-                   border_focus='55AAAA'),
-    layout.Max(),
+    layout.Columns(**layout_theme),
+    layout.Max(**layout_theme),
 ]
 
 widget_defaults = dict(font="sans", fontsize=14, padding=3,)
