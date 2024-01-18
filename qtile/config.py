@@ -8,7 +8,13 @@ mod = "mod4"
 terminal = guess_terminal()
 
 pc_widgets = [
-    widget.GroupBox(),
+    widget.TextBox(fmt=''),
+    widget.GroupBox(
+        highlight_method='line',
+        block_highlight_text_color="5BB1CD",
+        inactive='555555',
+        border_width=2
+    ),
     widget.CheckUpdates(custom_command="yay -S && yay -Qu",
                         execute='lazy.widget["checkupdates"].force_update()',
                         no_update_string="󰍕",
@@ -28,7 +34,7 @@ pc_widgets = [
     widget.Clock(format="%d/%m %H:%M",
                  mouse_callbacks={'Button1': lazy.spawn("coretime")}),
     widget.KeyboardLayout(configured_keyboards=['us', 'br']),
-    widget.TextBox(fmt=' '),
+    widget.TextBox(fmt=''),
     widget.PulseVolume(
         mouse_callbacks={'Button1': lazy.spawn("pavucontrol")},
         emoji=True,
@@ -145,6 +151,7 @@ screens = [
     Screen(
         bottom=bar.Bar(pc_widgets,
                        24,
+                       margin=[0, 5, 5, 5]
                        # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
                        # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
                        ),
