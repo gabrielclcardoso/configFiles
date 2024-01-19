@@ -1,3 +1,4 @@
+import subprocess
 from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
@@ -7,6 +8,73 @@ from custom_widgets import MicrophoneStatus
 mod = "mod4"
 terminal = guess_terminal()
 
+notebook_widgets = [
+    widget.TextBox(fmt=''),
+    widget.GroupBox(
+        highlight_method='line',
+        block_highlight_text_color="5BB1CD",
+        inactive='555555',
+        border_width=2
+    ),
+    widget.CheckUpdates(
+        custom_command="yay -S && yay -Qu",
+        execute='lazy.widget["checkupdates"].force_update()',
+        no_update_string="󰍕",
+        update_interval=3600
+    ),
+    widget.Prompt(),
+    widget.Spacer(bar.STRETCH),
+    widget.MemoryGraph(type='linefill', line_width=1),
+    widget.CPUGraph(
+        type='linefill', line_width=1,
+        graph_color='FF8C00',
+        fill_color='FF8C00'
+    ),
+    widget.ThermalZone(
+        zone='/sys/class/thermal/thermal_zone5/temp',
+        update_interval=5,
+        high=65,
+        crit=80
+    ),
+    widget.Spacer(bar.STRETCH),
+
+    widget.Clock(
+        format="%d/%m %H:%M",
+        mouse_callbacks={'Button1': lazy.spawn("coretime")}
+    ),
+    widget.KeyboardLayout(configured_keyboards=['us', 'br']),
+    widget.TextBox(fmt=''),
+    widget.TextBox(
+        fmt='',
+        mouse_callbacks={'Button1': lazy.spawn("blueman-manager")}
+    ),
+    widget.Wlan(
+        interface='wlp0s20f3',
+        format='󱚽',
+        disconnected_message='󰖪',
+        mouse_callbacks={'Button1': lazy.spawn("alacritty -e nmtui")}
+    ),
+    widget.PulseVolume(
+        mouse_callbacks={'Button1': lazy.spawn("pavucontrol")},
+        emoji=True,
+        emoji_list=['󰖁', '󰕿', '󰖀', '󰕾'],
+    ),
+    MicrophoneStatus(
+        update_interval=0.5,
+        mouse_callbacks={'Button1': lazy.spawn("pavucontrol")}
+    ),
+    widget.TextBox(
+        fmt='󰍺',
+        mouse_callbacks={'Button1': lazy.spawn("arandr")}
+    ),
+    widget.Battery(
+        format='{char}{percent:2.0%}',
+        charge_char='󰂄',
+        discharge_char='󱟤'
+    ),
+    widget.TextBox(fmt=''),
+]
+
 pc_widgets = [
     widget.TextBox(fmt=''),
     widget.GroupBox(
@@ -15,24 +83,31 @@ pc_widgets = [
         inactive='555555',
         border_width=2
     ),
-    widget.CheckUpdates(custom_command="yay -S && yay -Qu",
-                        execute='lazy.widget["checkupdates"].force_update()',
-                        no_update_string="󰍕",
-                        update_interval=3600),
+    widget.CheckUpdates(
+        custom_command="yay -S && yay -Qu",
+        execute='lazy.widget["checkupdates"].force_update()',
+        no_update_string="󰍕",
+        update_interval=3600
+    ),
     widget.Prompt(),
     widget.Spacer(bar.STRETCH),
     widget.MemoryGraph(type='linefill', line_width=1),
-    widget.CPUGraph(type='linefill', line_width=1,
-                    graph_color='FF8C00',
-                    fill_color='FF8C00'),
-    widget.ThermalZone(zone="/sys/class/hwmon/hwmon1/temp1_input",
-                       update_interval=5,
-                       high=65,
-                       crit=80),
+    widget.CPUGraph(
+        type='linefill', line_width=1,
+        graph_color='FF8C00',
+        fill_color='FF8C00'
+    ),
+    widget.ThermalZone(
+        zone="/sys/class/hwmon/hwmon1/temp1_input",
+        update_interval=5,
+        high=65,
+        crit=80
+    ),
     widget.Spacer(bar.STRETCH),
-
-    widget.Clock(format="%d/%m %H:%M",
-                 mouse_callbacks={'Button1': lazy.spawn("coretime")}),
+    widget.Clock(
+        format="%d/%m %H:%M",
+        mouse_callbacks={'Button1': lazy.spawn("coretime")}
+    ),
     widget.KeyboardLayout(configured_keyboards=['us', 'br']),
     widget.TextBox(fmt=''),
     widget.PulseVolume(
@@ -40,12 +115,25 @@ pc_widgets = [
         emoji=True,
         emoji_list=['󰖁', '󰕿', '󰖀', '󰕾'],
     ),
-    MicrophoneStatus(update_interval=0.5,
-                     mouse_callbacks={'Button1': lazy.spawn("/home/gcorreia/.config/qtile/volume_scripts/mute_mic.sh")}),
-    widget.TextBox(fmt='󰍺',
-                   mouse_callbacks={'Button1': lazy.spawn("arandr")}),
+    MicrophoneStatus(
+        update_interval=0.5,
+        mouse_callbacks={'Button1': lazy.spawn(
+            "/home/gcorreia/.config/qtile/volume_scripts/mute_mic.sh")}
+    ),
+    widget.TextBox(
+        fmt='󰍺',
+        mouse_callbacks={'Button1': lazy.spawn("arandr")}
+    ),
     widget.TextBox(fmt=''),
 ]
+
+hostname = subprocess.run(
+    ['hostname'], stdout=subprocess.PIPE).stdout.decode('UTF-8')
+if hostname == 'swift-arch\n':
+    widgets = notebook_widgets
+else:
+    widgets = pc_widgets
+
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -149,7 +237,7 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        bottom=bar.Bar(pc_widgets,
+        bottom=bar.Bar(widgets,
                        24,
                        margin=[0, 5, 5, 5]
                        # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
