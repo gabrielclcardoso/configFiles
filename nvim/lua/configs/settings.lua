@@ -7,11 +7,6 @@ vim.api.nvim_exec([[
 ]], false)
 
 
--- Force nvim to use 256colors when running inside tmux--
-if vim.fn.has('gui_running') == 0 and vim.o.term:find('^%(screen%|tmux%)') then
-  vim.o.t_8f = '\27[38;2;%lu;%lu;%lum'
-  vim.o.t_8b = '\27[48;2;%lu;%lu;%lum'
-end
 
 vim.o.listchars = "tab:>-"
 
