@@ -1,5 +1,9 @@
 OS=$(uname)
 
+if [ -f ~/.bash_secrets ]; then
+    source ~/.bash_secrets
+fi
+
 ################################### COLORS #####################################
 
 blk='\[\033[01;30m\]'	# Black
@@ -26,6 +30,10 @@ alias ls="ls --color"
 
 unlock-git() {
 	eval $(ssh-agent) && ssh-add ~/.ssh/id_ed25519
+}
+
+unlock-nym() {
+	eval $(ssh-agent) && ssh-add ~/.ssh/nym-nodes-key
 }
 
 ################################################################################

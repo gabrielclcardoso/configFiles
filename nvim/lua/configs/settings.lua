@@ -1,13 +1,3 @@
--- Makes .tpp files be highlighted as cpp files --
-vim.api.nvim_exec([[
-  augroup filetype_tpp
-    autocmd!
-    autocmd BufNewFile,BufRead *.tpp set filetype=cpp
-  augroup END
-]], false)
-
-
-
 vim.o.listchars = "tab:>-"
 
 vim.o.syntax = "on"

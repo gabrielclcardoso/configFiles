@@ -2,12 +2,9 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
 		"simrat39/rust-tools.nvim",
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local keymap = vim.keymap
 
 		local opts = { noremap = true, silent = true }
@@ -53,43 +50,36 @@ return {
 			opts.desc = "Restart LSP"
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 		end
-		local capabilities = cmp_nvim_lsp.default_capabilities()
-		local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-		for type, icon in pairs(signs) do
-			local hl = "DiagnosticSign" .. type
-			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+
+		local capabilities = require('blink.cmp').get_lsp_capabilities()
+		vim.diagnostic.config({
+			signs = {
+				text = {
+					[vim.diagnostic.severity.ERROR] = " ",
+					[vim.diagnostic.severity.WARN] = " ",
+					[vim.diagnostic.severity.HINT] = "󰠠 ",
+					[vim.diagnostic.severity.INFO] = " ",
+				},
+			},
+		})
+
+		local servers = { "html", "ts_ls", "cssls", "clangd", "pylsp" }
+		for _, server in ipairs(servers) do
+			vim.lsp.config(server, {
+				capabilities = capabilities,
+				on_attach = on_attach,
+			})
+			vim.lsp.enable(server)
 		end
 
-		-- HTML LSP setup
-		lspconfig["html"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
 
-		-- TS LSP setup
-		lspconfig["tsserver"].setup({
+		vim.lsp.config("lua_ls", {
 			capabilities = capabilities,
 			on_attach = on_attach,
-		})
-
-		-- CSS LSP setup
-		lspconfig["cssls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		-- Lua LSP setup
-		lspconfig["lua_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			settings = { -- custom settings for lua
+			settings = {
 				Lua = {
-					-- make the language server recognize "vim" global
-					diagnostics = {
-						globals = { "vim" },
-					},
+					diagnostics = { globals = { "vim" } },
 					workspace = {
-						-- make language server aware of runtime files
 						library = {
 							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
 							[vim.fn.stdpath("config") .. "/lua"] = true,
@@ -98,25 +88,6 @@ return {
 				},
 			},
 		})
-
-		-- Clangd LSP setup
-		lspconfig["clangd"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		-- Python LSP setup
-		lspconfig["pylsp"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		-- Rust LSP setup
-		local rt = require("rust-tools")
-		rt.setup({
-			server = {
-				on_attach = on_attach,
-			},
-		})
+		vim.lsp.enable("lua_ls")
 	end
 }

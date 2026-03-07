@@ -5,8 +5,10 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from custom_widgets import MicrophoneStatus
 
+
 mod = "mod4"
 terminal = guess_terminal()
+# auto_minimize = False
 
 notebook_widgets = [
     widget.TextBox(fmt=''),
@@ -139,6 +141,7 @@ keys = [
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     # Switch between windows
+    Key([mod], "m", lazy.window.toggle_minimize()),
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
@@ -272,8 +275,8 @@ floating_layout = layout.Floating(
     ]
 )
 auto_fullscreen = True
-focus_on_window_activation = "smart"
+focus_on_window_activation = "focus"
 reconfigure_screens = True
-auto_minimize = True
+auto_minimize = False
 wl_input_rules = None
 wmname = "LG3D"
