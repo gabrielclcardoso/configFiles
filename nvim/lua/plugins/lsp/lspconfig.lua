@@ -63,7 +63,7 @@ return {
 			},
 		})
 
-		local servers = { "html", "ts_ls", "cssls", "clangd", "pylsp" }
+		local servers = { "html", "ts_ls", "cssls", "clangd", "ruff" }
 		for _, server in ipairs(servers) do
 			vim.lsp.config(server, {
 				capabilities = capabilities,
@@ -72,6 +72,19 @@ return {
 			vim.lsp.enable(server)
 		end
 
+		vim.lsp.config("basedpyright", {
+			capabilities = capabilities,
+			on_attach = on_attach,
+			before_init = function(_, config)
+				local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
+				if vim.fn.filereadable(venv_path) == 1 then
+					if not config.settings then config.settings = {} end
+					if not config.settings.python then config.settings.python = {} end
+					config.settings.python.pythonPath = venv_path
+				end
+			end,
+		})
+		vim.lsp.enable("basedpyright")
 
 		vim.lsp.config("lua_ls", {
 			capabilities = capabilities,

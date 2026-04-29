@@ -24,7 +24,8 @@ return {
 				"html",
 				"cssls",
 				"lua_ls",
-				"pylsp",
+				"basedpyright",
+				"ruff"
 			},
 			automatic_installation = true, -- not the same as ensure_installed
 		})

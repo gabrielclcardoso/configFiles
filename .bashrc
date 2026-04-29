@@ -41,6 +41,19 @@ unlock-nym() {
 #################################### PATH(42) ##################################
 
 export PATH="$PATH:$HOME/.bin"
+export PATH="$PATH:$HOME/.local/bin"
+
+################################################################################
+
+# Se o diretório não existir, confirme o caminho dentro do Android Studio em:
+# Settings > Languages & Frameworks > Android SDK
+export ANDROID_HOME=$HOME/Android/Sdk
+
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 
 ################################### HISTORY ####################################
 

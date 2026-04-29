@@ -11,6 +11,7 @@ return {
 				css = { "prettierd" },
 				html = { "prettierd" },
 				rust = { "rustfmt" },
+				python = { "ruff_fix", "ruff_format" },
 			},
 			format_on_save = {
 				lsp_fallback = true,
