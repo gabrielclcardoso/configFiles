@@ -1,5 +1,4 @@
 OS=$(uname)
-
 if [ -f ~/.bash_secrets ]; then
     source ~/.bash_secrets
 fi
@@ -42,6 +41,9 @@ unlock-nym() {
 
 export PATH="$PATH:$HOME/.bin"
 export PATH="$PATH:$HOME/.local/bin"
+
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+export PATH=$JAVA_HOME/bin:$PATH
 
 ################################################################################
 
