@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# If clicked on the bar, toggle to the next layout
+if [ "$BLOCK_BUTTON" = "1" ]; then
+    xkb-switch -n
+fi
+
+# Print the active layout in uppercase
+xkb-switch | tr '[:lower:]' '[:upper:]'

@@ -27,3 +27,8 @@ style = "Regular"
 
 [general]
 import = ["~/.config/alacritty/themes/themes/monokai_charcoal.yaml"]
+
+[[keyboard.bindings]]
+key = "+"
+mods = "Control | Shift"
+action = "IncreaseFontSize"
