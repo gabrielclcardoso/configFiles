@@ -1,25 +1,22 @@
 #!/bin/bash
 
-OS=$(uname)
+# NVIM
+DOTFILES_DIR="$HOME/Projects/personal/configFiles"
+NVIM_CONF_DIR="$HOME/.config/nvim/lua/config"
 
-alacritty --version &> /dev/null
-[[ $? -ne 0 ]] && echo "Alacritty not installed"
-nvim --version &> /dev/null
-[[ $? -ne 0 ]] && echo "nvim not installed"
-tmux -V &> /dev/null
-[[ $? -ne 0 ]] && echo "tmux not installed"
+mkdir -p "$NVIM_CONF_DIR"
 
-cp -r alacritty $HOME/.config
-cp -r nvim $HOME/.config
-cp -r qtile $HOME/.config
-if [[ "$OS" == "Linux"	]]
-then
-	cp font/* $HOME/.local/share/fonts/
+ln -sf "$DOTFILES_DIR/nvim/lua/config/options.lua" "$NVIM_CONF_DIR/options.lua"
+ln -sf "$DOTFILES_DIR/nvim/lua/config/keymaps.lua" "$NVIM_CONF_DIR/keymaps.lua"
+
+# BASH
+cp .bash_aliases "$HOME/.bash_aliases"
+[ -f .bash_secrets ] && cp .bash_secrets "$HOME/.bash_secrets"
+
+HOOK='[[ -f ~/.bash_aliases ]] && source ~/.bash_aliases'
+if ! grep -qxF "$HOOK" "$HOME/.bashrc"; then
+    echo -e "\n# User aliases hook\n$HOOK" >> "$HOME/.bashrc"
+    echo "Added ~/.bash_aliases hook to ~/.bashrc"
 else
-	cp font/* $HOME/Library/Fonts/
+    echo "Hook already present in ~/.bashrc"
 fi
-cp .bashrc $HOME
-cp picom.conf $HOME/.config
-cp .bash_profile $HOME
-cp .tmux.conf $HOME
-cp -r .tmux $HOME
