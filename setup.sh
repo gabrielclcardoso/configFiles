@@ -214,6 +214,12 @@ if command -v omarchy-restart-xcompose &>/dev/null; then
   omarchy-restart-xcompose &>/dev/null || true
 fi
 
+if command -v omarchy-shell &>/dev/null; then
+  echo "--> Reloading Omarchy shell configuration and plugins..."
+  omarchy-shell shell rescanPlugins &>/dev/null || true
+  omarchy-shell shell reloadConfig &>/dev/null || true
+fi
+
 echo ""
 echo "==> Setup completed successfully!"
 if [ -d "$BACKUP_DIR" ]; then
