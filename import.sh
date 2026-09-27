@@ -49,8 +49,13 @@ check_or_import "$DOTFILES_DIR/git/config" "$HOME/.config/git/config"
 check_or_import "$DOTFILES_DIR/omarchy/shell.json" "$HOME/.config/omarchy/shell.json"
 check_or_import "$DOTFILES_DIR/omarchy/shell.toml" "$HOME/.config/omarchy/shell.toml"
 check_or_import "$DOTFILES_DIR/omarchy/defaults/agent" "$HOME/.config/omarchy/defaults/agent"
-check_or_import "$DOTFILES_DIR/omarchy/themes/brat" "$HOME/.config/omarchy/themes/brat"
-check_or_import "$DOTFILES_DIR/omarchy/themes/kid-a" "$HOME/.config/omarchy/themes/kid-a"
+if [ -d "$DOTFILES_DIR/omarchy/themes" ]; then
+  for theme_dir in "$DOTFILES_DIR/omarchy/themes"/*; do
+    [ -d "$theme_dir" ] || continue
+    theme_name="$(basename "$theme_dir")"
+    check_or_import "$theme_dir" "$HOME/.config/omarchy/themes/$theme_name"
+  done
+fi
 check_or_import "$DOTFILES_DIR/electron-flags.conf" "$HOME/.config/electron-flags.conf"
 check_or_import "$DOTFILES_DIR/mise/config.toml" "$HOME/.config/mise/config.toml"
 check_or_import "$DOTFILES_DIR/tensaku/config.toml" "$HOME/.config/tensaku/config.toml"

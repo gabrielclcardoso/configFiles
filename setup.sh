@@ -122,8 +122,13 @@ echo "--> Configuring Omarchy..."
 link_file "$DOTFILES_DIR/omarchy/shell.json" "$HOME/.config/omarchy/shell.json"
 link_file "$DOTFILES_DIR/omarchy/shell.toml" "$HOME/.config/omarchy/shell.toml"
 link_file "$DOTFILES_DIR/omarchy/defaults/agent" "$HOME/.config/omarchy/defaults/agent"
-link_file "$DOTFILES_DIR/omarchy/themes/brat" "$HOME/.config/omarchy/themes/brat"
-link_file "$DOTFILES_DIR/omarchy/themes/kid-a" "$HOME/.config/omarchy/themes/kid-a"
+if [ -d "$DOTFILES_DIR/omarchy/themes" ]; then
+  for theme_dir in "$DOTFILES_DIR/omarchy/themes"/*; do
+    [ -d "$theme_dir" ] || continue
+    theme_name="$(basename "$theme_dir")"
+    link_file "$theme_dir" "$HOME/.config/omarchy/themes/$theme_name"
+  done
+fi
 
 # --- Electron Keyring Flags (Element / Discord / etc) ---
 echo "--> Configuring Electron Flags..."
