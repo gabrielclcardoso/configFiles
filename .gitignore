@@ -1,2 +1,7 @@
 nvim/plugin
 __pycache__
+.bash_secrets
+*.bak
+*.bak.*
+*.backup
+.DS_Store
