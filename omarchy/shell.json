@@ -15,6 +15,9 @@
         },
         {
           "id": "omarchy.workspaces"
+        },
+        {
+          "id": "gcorreia.b3-tracker"
         }
       ],
       "center": [
@@ -34,9 +37,6 @@
           "id": "omarchy.weather"
         },
         {
-          "id": "gcorreia.b3-tracker"
-        },
-        {
           "id": "omarchy.system-update"
         }
       ],
@@ -46,8 +46,10 @@
         },
         {
           "id": "crmne.omastats",
-          "modules": "cpu,memory,network,gpu,sensors",
-          "barSensors": "cpu,gpu"
+          "barSensors": "cpu,gpu",
+          "modules": "cpu,memory,network,sensors,gpu",
+          "gpuStyle": "text",
+          "networkStyle": "text"
         },
         {
           "id": "omarchy.agents"
