@@ -39,6 +39,7 @@ fi
 
 check_or_import "$DOTFILES_DIR/nvim/lua/config/options.lua" "$HOME/.config/nvim/lua/config/options.lua"
 check_or_import "$DOTFILES_DIR/nvim/lua/config/keymaps.lua" "$HOME/.config/nvim/lua/config/keymaps.lua"
+check_or_import "$DOTFILES_DIR/nvim/lazyvim.json" "$HOME/.config/nvim/lazyvim.json"
 check_or_import "$DOTFILES_DIR/.bash_aliases" "$HOME/.bash_aliases"
 check_or_import "$DOTFILES_DIR/.XCompose" "$HOME/.XCompose"
 check_or_import "$DOTFILES_DIR/hypr/input.lua" "$HOME/.config/hypr/input.lua"

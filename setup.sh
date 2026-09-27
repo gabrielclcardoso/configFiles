@@ -83,6 +83,7 @@ fi
 echo "--> Configuring Neovim..."
 link_file "$DOTFILES_DIR/nvim/lua/config/options.lua" "$HOME/.config/nvim/lua/config/options.lua"
 link_file "$DOTFILES_DIR/nvim/lua/config/keymaps.lua" "$HOME/.config/nvim/lua/config/keymaps.lua"
+link_file "$DOTFILES_DIR/nvim/lazyvim.json" "$HOME/.config/nvim/lazyvim.json"
 
 # --- Bash ---
 echo "--> Configuring Bash..."
@@ -128,6 +129,16 @@ if [ -d "$DOTFILES_DIR/omarchy/themes" ]; then
     theme_name="$(basename "$theme_dir")"
     link_file "$theme_dir" "$HOME/.config/omarchy/themes/$theme_name"
   done
+fi
+
+# Ensure third-party Omarchy shell plugins (e.g. OmaStats) are installed
+if [ ! -d "$HOME/.config/omarchy/plugins/crmne.omastats" ]; then
+  echo "--> Installing Omarchy OmaStats plugin..."
+  mkdir -p "$HOME/.config/omarchy/plugins"
+  git clone https://github.com/crmne/omastats.git "$HOME/.config/omarchy/plugins/crmne.omastats"
+  if command -v omarchy-shell &>/dev/null; then
+    omarchy-shell shell rescanPlugins &>/dev/null || true
+  fi
 fi
 
 # --- Electron Keyring Flags (Element / Discord / etc) ---

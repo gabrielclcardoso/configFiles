@@ -42,6 +42,11 @@
           "id": "omarchy.tray"
         },
         {
+          "id": "crmne.omastats",
+          "modules": "cpu,memory,network,gpu,sensors",
+          "barSensors": "cpu,gpu"
+        },
+        {
           "id": "omarchy.agents"
         },
         {
