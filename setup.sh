@@ -89,6 +89,11 @@ echo "--> Configuring Mise & Tensaku..."
 link_file "$DOTFILES_DIR/mise/config.toml" "$HOME/.config/mise/config.toml"
 link_file "$DOTFILES_DIR/tensaku/config.toml" "$HOME/.config/tensaku/config.toml"
 
+# --- User CLI Shims ---
+echo "--> Configuring CLI Shims..."
+link_file "$DOTFILES_DIR/bin/gemini" "$HOME/.local/bin/gemini"
+chmod +x "$DOTFILES_DIR/bin/gemini"
+
 # --- Live Reloading (if in active Omarchy session) ---
 if command -v hyprctl &>/dev/null && [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
   echo "--> Reloading Hyprland configuration..."

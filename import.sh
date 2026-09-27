@@ -54,6 +54,7 @@ check_or_import "$DOTFILES_DIR/omarchy/themes/kid-a" "$HOME/.config/omarchy/them
 check_or_import "$DOTFILES_DIR/electron-flags.conf" "$HOME/.config/electron-flags.conf"
 check_or_import "$DOTFILES_DIR/mise/config.toml" "$HOME/.config/mise/config.toml"
 check_or_import "$DOTFILES_DIR/tensaku/config.toml" "$HOME/.config/tensaku/config.toml"
+check_or_import "$DOTFILES_DIR/bin/gemini" "$HOME/.local/bin/gemini"
 
 echo ""
 echo "Tip: Run './setup.sh' to establish or restore any missing symlinks."

@@ -1,0 +1,18 @@
+#!/bin/bash
+# Shim translating legacy gemini CLI flags to agy
+
+args=()
+while (($#)); do
+  case "$1" in
+    --yolo)
+      args+=(--dangerously-skip-permissions)
+      shift
+      ;;
+    *)
+      args+=("$1")
+      shift
+      ;;
+  esac
+done
+
+exec agy "${args[@]}"
