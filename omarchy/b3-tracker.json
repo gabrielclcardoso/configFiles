@@ -1,0 +1,28 @@
+{
+  "defaultWindow": "1mo",
+  "cycleSeconds": 4,
+  "categories": {
+    "Watchlist": [
+      {"symbol": "CMIG3", "name": "Cemig"},
+      {"symbol": "CPFE3", "name": "CPFL Energia"},
+      {"symbol": "CXSE3", "name": "Caixa Seguridade"},
+      {"symbol": "SAPR3", "name": "Sanepar ON"},
+      {"symbol": "SAPR4", "name": "Sanepar PN"}
+    ],
+    "Carteira Ações": [
+      {"symbol": "ALUP3", "name": "Alupar ON"},
+      {"symbol": "ALUP4", "name": "Alupar PN"},
+      {"symbol": "BBAS3", "name": "Banco do Brasil"},
+      {"symbol": "BBSE3", "name": "BB Seguridade"},
+      {"symbol": "ITSA4", "name": "Itaúsa"},
+      {"symbol": "KLBN4", "name": "Klabin"},
+      {"symbol": "SAUD3", "name": "Bradsaude"},
+      {"symbol": "TIMS3", "name": "TIM"}
+    ],
+    "FIIs": [
+      {"symbol": "GARE11", "name": "Guardian Real Estate"},
+      {"symbol": "GGRC11", "name": "GGR Covepi"},
+      {"symbol": "HGLG11", "name": "Patria Log FII"}
+    ]
+  }
+}

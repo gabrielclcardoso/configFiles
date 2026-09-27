@@ -123,6 +123,7 @@ echo "--> Configuring Omarchy..."
 link_file "$DOTFILES_DIR/omarchy/shell.json" "$HOME/.config/omarchy/shell.json"
 link_file "$DOTFILES_DIR/omarchy/shell.toml" "$HOME/.config/omarchy/shell.toml"
 link_file "$DOTFILES_DIR/omarchy/defaults/agent" "$HOME/.config/omarchy/defaults/agent"
+link_file "$DOTFILES_DIR/omarchy/b3-tracker.json" "$HOME/.config/omarchy/b3-tracker.json"
 if [ -d "$DOTFILES_DIR/omarchy/themes" ]; then
   for theme_dir in "$DOTFILES_DIR/omarchy/themes"/*; do
     [ -d "$theme_dir" ] || continue
@@ -136,6 +137,49 @@ if [ ! -d "$HOME/.config/omarchy/plugins/crmne.omastats" ]; then
   echo "--> Installing Omarchy OmaStats plugin..."
   mkdir -p "$HOME/.config/omarchy/plugins"
   git clone https://github.com/crmne/omastats.git "$HOME/.config/omarchy/plugins/crmne.omastats"
+  if command -v omarchy-shell &>/dev/null; then
+    omarchy-shell shell rescanPlugins &>/dev/null || true
+  fi
+fi
+
+# Ensure personal B3 tracker development repo and Omarchy plugin are installed
+b3_dev_dir="$HOME/Work/personal/omarchy-b3-tracker"
+b3_plugin_dir="$HOME/.config/omarchy/plugins/gcorreia.b3-tracker"
+
+if [ ! -d "$b3_dev_dir" ]; then
+  echo "--> Cloning personal omarchy-b3-tracker repository..."
+  mkdir -p "$(dirname "$b3_dev_dir")"
+  if ! git clone git@github.com:gabrielclcardoso/omarchy-b3-tracker.git "$b3_dev_dir" 2>/dev/null; then
+    git clone https://github.com/gabrielclcardoso/omarchy-b3-tracker.git "$b3_dev_dir"
+  fi
+fi
+
+# Ensure post-commit hook exists in dev repo to sync to the plugin directory
+if [ -d "$b3_dev_dir/.git" ]; then
+  hook_file="$b3_dev_dir/.git/hooks/post-commit"
+  if [ ! -f "$hook_file" ]; then
+    echo "--> Installing post-commit hook for omarchy-b3-tracker..."
+    cat << 'EOF' > "$hook_file"
+#!/usr/bin/env bash
+# Automatically sync commits from personal repo to Omarchy plugins directory
+PLUGIN_DIR="$HOME/.config/omarchy/plugins/gcorreia.b3-tracker"
+if [ -d "$PLUGIN_DIR/.git" ]; then
+    git -C "$PLUGIN_DIR" pull --ff-only 2>/dev/null || true
+fi
+EOF
+    chmod +x "$hook_file"
+  fi
+fi
+
+# Ensure plugin is installed in Omarchy plugins directory
+if [ ! -d "$b3_plugin_dir" ]; then
+  echo "--> Installing Omarchy B3 Tracker plugin..."
+  mkdir -p "$HOME/.config/omarchy/plugins"
+  if [ -d "$b3_dev_dir/.git" ]; then
+    git clone "$b3_dev_dir" "$b3_plugin_dir"
+  else
+    git clone https://github.com/gabrielclcardoso/omarchy-b3-tracker.git "$b3_plugin_dir"
+  fi
   if command -v omarchy-shell &>/dev/null; then
     omarchy-shell shell rescanPlugins &>/dev/null || true
   fi

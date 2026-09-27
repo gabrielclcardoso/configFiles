@@ -50,6 +50,7 @@ check_or_import "$DOTFILES_DIR/git/config" "$HOME/.config/git/config"
 check_or_import "$DOTFILES_DIR/omarchy/shell.json" "$HOME/.config/omarchy/shell.json"
 check_or_import "$DOTFILES_DIR/omarchy/shell.toml" "$HOME/.config/omarchy/shell.toml"
 check_or_import "$DOTFILES_DIR/omarchy/defaults/agent" "$HOME/.config/omarchy/defaults/agent"
+check_or_import "$DOTFILES_DIR/omarchy/b3-tracker.json" "$HOME/.config/omarchy/b3-tracker.json"
 if [ -d "$DOTFILES_DIR/omarchy/themes" ]; then
   for theme_dir in "$DOTFILES_DIR/omarchy/themes"/*; do
     [ -d "$theme_dir" ] || continue
