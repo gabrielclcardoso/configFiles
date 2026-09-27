@@ -1,0 +1,13 @@
+ansible
+dnsmasq
+element-desktop
+keepassxc
+libvirt
+qemu-base
+qemu-desktop
+signal-desktop
+syncthing
+telegram-desktop
+uv
+virt-manager
+wine

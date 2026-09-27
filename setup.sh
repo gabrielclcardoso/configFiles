@@ -4,6 +4,23 @@ set -e
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BACKUP_DIR="$HOME/.config/dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 
+INSTALL_PKGS=0
+for arg in "$@"; do
+  case "$arg" in
+    --install-pkgs|-p)
+      INSTALL_PKGS=1
+      ;;
+    --help|-h)
+      echo "Usage: ./setup.sh [OPTIONS]"
+      echo ""
+      echo "Options:"
+      echo "  -p, --install-pkgs   Install extra user applications (pacman & AUR) and mise runtimes"
+      echo "  -h, --help           Show this help message"
+      exit 0
+      ;;
+  esac
+done
+
 echo "==> Setting up dotfiles from: $DOTFILES_DIR"
 
 link_file() {
@@ -28,6 +45,39 @@ link_file() {
   ln -s "$src" "$dest"
   echo "  [LINK] $dest -> $src"
 }
+
+# --- Optional: Package Installation ---
+if [ "$INSTALL_PKGS" = "1" ]; then
+  echo ""
+  echo "==> Installing User Applications and Tools..."
+
+  # Official Arch repository packages
+  if [ -f "$DOTFILES_DIR/packages.txt" ]; then
+    echo "--> Installing official packages from packages.txt via pacman..."
+    sudo pacman -S --needed --noconfirm - < "$DOTFILES_DIR/packages.txt"
+  fi
+
+  # AUR packages
+  if [ -f "$DOTFILES_DIR/packages-aur.txt" ] && command -v yay &>/dev/null; then
+    echo "--> Installing AUR packages from packages-aur.txt via yay..."
+    yay -S --needed --noconfirm - < "$DOTFILES_DIR/packages-aur.txt"
+  fi
+
+  # Mise tools
+  if command -v mise &>/dev/null; then
+    echo "--> Installing mise developer runtimes (node, agy, gh, etc.)..."
+    mise install
+  fi
+
+  # Syncthing service
+  if command -v syncthing &>/dev/null; then
+    if ! systemctl is-enabled "syncthing@$USER.service" &>/dev/null; then
+      echo "--> Enabling and starting Syncthing service for $USER..."
+      sudo systemctl enable --now "syncthing@$USER.service"
+    fi
+  fi
+  echo ""
+fi
 
 # --- Neovim ---
 echo "--> Configuring Neovim..."
@@ -113,3 +163,7 @@ echo "    Any config you edit is now directly tracked in this git repo."
 echo "    To sync changes across machines:"
 echo "      On source machine: git commit -am \"update\" && git push"
 echo "      On target machine: git pull"
+if [ "$INSTALL_PKGS" = "0" ]; then
+  echo ""
+  echo "Tip: Run './setup.sh --install-pkgs' to install user applications (packages.txt), AUR packages, and mise tools."
+fi
