@@ -204,6 +204,10 @@ echo "--> Configuring CLI Shims..."
 link_file "$DOTFILES_DIR/bin/gemini" "$HOME/.local/bin/gemini"
 chmod +x "$DOTFILES_DIR/bin/gemini"
 
+# --- 42 ---
+echo "--> Configuring 42..."
+link_file "$DOTFILES_DIR/42/RNCP7/GEMINI.md" "$HOME/Work/42/RNCP7/GEMINI.md"
+
 # --- Live Reloading (if in active Omarchy session) ---
 if command -v hyprctl &>/dev/null && [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
   echo "--> Reloading Hyprland configuration..."
